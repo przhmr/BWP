@@ -1,0 +1,1 @@
+import{_ as s,a as o,b as t,a1 as a}from"./entry.819ce933.js";const r={},c={class:"short-label"};function n(e,l){return o(),t("span",c,[a(e.$slots,"default")])}const f=s(r,[["render",n]]);export{f as S};
