@@ -372,15 +372,34 @@ return hydrationPromise;
   
   ;(() => {
   w._$delayHydration.then((e) => {
-    if (!(e instanceof PointerEvent) && !(e instanceof MouseEvent) && !(e instanceof TouchEvent))
-      return;
-    if (e instanceof MouseEvent && e.type !== "click")
-      return;
+    // Check if e is a valid event object
+    if (!(e instanceof Event)) return;
+
+    // Check for PointerEvent and MouseEvent
+    if (!(e instanceof PointerEvent) && !(e instanceof MouseEvent)) {
+      // Check for TouchEvent only if it's supported
+      if (typeof TouchEvent !== 'undefined') {
+        if (!(e instanceof TouchEvent)) return;
+      } else {
+        // If TouchEvent is not supported, we might want to handle this case differently
+        console.log("TouchEvent is not supported on this device");
+        // You can add alternative handling here if needed
+      }
+    }
+
+    if (e instanceof MouseEvent && e.type !== "click") return;
+
     setTimeout(
-      () => w.requestIdleCallback(
-        () => setTimeout(() => e.target?.click(), 500)
-      ),
-      50
+      () => {
+        if (typeof requestIdleCallback !== 'undefined') {
+          requestIdleCallback(
+            () => setTimeout(() => e.target?.click(), 500)
+          );
+        } else {
+          // Fallback for browsers that don't support requestIdleCallback
+          setTimeout(() => e.target?.click(), 500);
+        }
+      }
     );
   });
 })();
