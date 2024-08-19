@@ -1,4 +1,4 @@
 [[headers]]
-  for = "/styles.css"
+  for = "/main.css"
   [headers.values]
     Content-Type = "text/css"
