@@ -1,0 +1,4 @@
+[[headers]]
+  for = "/styles.css"
+  [headers.values]
+    Content-Type = "text/css"
